@@ -26,4 +26,4 @@ def guess_the_number():
 
 # Game shuru karne ke liye function call karein
 guess_the_number()
-print("Hello DevOps 🚀")
+
