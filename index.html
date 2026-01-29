@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f4f4f9; }
+        .container { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; max-width: 400px; }
+        h1 { color: #333; }
+        input { padding: 10px; width: 60px; border: 2px solid #ddd; border-radius: 5px; font-size: 1rem; }
+        button { padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem; }
+        button:hover { background-color: #218838; }
+        #message { margin-top: 20px; font-weight: bold; color: #555; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Number Guessing Game</h1>
+    <p>Main 1 se 20 ke beech ek number soch raha hoon.</p>
+    
+    <input type="number" id="userGuess" placeholder="?" min="1" max="20">
+    <button onclick="checkGuess()">Guess Karein</button>
+
+    <p id="message"></p>
+    <button id="resetBtn" style="display:none; background-color: #007bff;" onclick="resetGame()">Dobara Khele</button>
+</div>
+
+<script>
+    // Python ke secret_number = random.randint(1, 20) ki tarah
+    let secretNumber = Math.floor(Math.random() * 20) + 1;
+    let attempts = 0;
+
+    function checkGuess() {
+        const inputField = document.getElementById('userGuess');
+        const message = document.getElementById('message');
+        const resetBtn = document.getElementById('resetBtn');
+        let guess = parseInt(inputField.value);
+
+        // Validation (Python ke try-except ki tarah)
+        if (isNaN(guess) || guess < 1 || guess > 20) {
+            message.innerText = "Kripya 1 se 20 ke beech sahi number likhein!";
+            message.style.color = "red";
+            return;
+        }
+
+        attempts++;
+
+        // Logic (Aapke if-elif-else ki tarah)
+        if (guess < secretNumber) {
+            message.innerText = "Thoda bada number try karein! (Too Low)";
+            message.style.color = "blue";
+        } else if (guess > secretNumber) {
+            message.innerText = "Thoda chota number try karein! (Too High)";
+            message.style.color = "orange";
+        } else {
+            message.innerText = `Mubarak ho! Aapne ${attempts} koshishon mein sahi pehchana.`;
+            message.style.color = "green";
+            resetBtn.style.display = "inline-block"; // Game khatam hone par reset button dikhayein
+        }
+        
+        inputField.value = ""; // Input saaf karne ke liye
+    }
+
+    function resetGame() {
+        secretNumber = Math.floor(Math.random() * 20) + 1;
+        attempts = 0;
+        document.getElementById('message').innerText = "";
+        document.getElementById('resetBtn').style.display = "none";
+        document.getElementById('userGuess').value = "";
+    }
+</script>
+
+</body>
+</html>
